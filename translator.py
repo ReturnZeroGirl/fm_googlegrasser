@@ -173,10 +173,11 @@ for i in range(ln):
 for i in range(ln):
     threads[i].join()
 logger.info(content_out)
+try:
+    a = open(config["options"]["file_out"], "w+", encoding=enc)
+except Exception as e:
+    logger.error(e)
+    logger.critical("文件写入出错,请检查配置文件!")
+    raise SystemExit
 for i in range(ln):
-    try:
-        open(config["options"]["file_out"], "a+", encoding=enc).write(content_out[i] + "\n")
-    except Exception as e:
-        logger.error(e)
-        logger.critical("文件写入出错,请检查配置文件!")
-        raise SystemExit
+        a.write(content_out[i] + "\n")
